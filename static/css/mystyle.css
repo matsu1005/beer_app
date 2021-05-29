@@ -1,0 +1,50 @@
+.nav-box {
+    width: 100%;
+    padding: 0 30px;
+}
+.review-content{
+    display: block; 
+    height: 72px;
+}
+
+.jumbotron {
+    background-image: url("../img/beer_sample2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.jumbotron .container {
+    padding-top: 30px;
+}
+
+.album {
+    background-image: url("../img/sky2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+body {
+    max-width: 1500px;
+    margin: auto;
+}
+
+.text-white {
+    text-shadow:5px 0 5px rgb(0, 0, 0);
+    font-size: 1.7rem;
+    display: inline-block;
+}
+
+.sel_box {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.card{
+    border-radius: 20px;
+}
+
+.card img {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
