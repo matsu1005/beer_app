@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block contents %}
+<div class="container">
+  <div class="row">
+    <div class="form-box" style="width: 400px;">
+      <h1>登録情報</h1>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+        {% endif %}
+        <button class="btn btn-primary" type="submit">更新する</button>
+        <a class="btn btn-secondary ml-2" href="{% url 'beer:index' %}">キャンセル</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
