@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Beer, Review, Comment, Favo
+
+admin.site.register([Beer, Review, Comment, Favo])
