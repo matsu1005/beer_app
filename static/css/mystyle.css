@@ -29,6 +29,23 @@ body {
     margin: auto;
 }
 
+#post-botton {
+    width: 80px; 
+    height: 80px; 
+    border-radius: 0 20px 20px 0; 
+    border: solid 1px grey;  
+    position:fixed; 
+    background:linear-gradient(rgb(255, 242, 215), rgb(236, 161, 22));
+}
+.post-botton {
+    text-decoration: none;
+    color: rgba(0,0,0,.5);
+    position: relative; 
+    top: 27px; 
+    left: 10px;
+    border-bottom: 1px dotted;
+}
+
 .text-white {
     text-shadow:5px 0 5px rgb(0, 0, 0);
     font-size: 1.7rem;
@@ -49,6 +66,10 @@ body {
     border-top-left-radius: 20px;
 }
 
+.card-text {
+    font-size: 0.8rem;
+}
+
 .messages {
     margin-bottom: 0;
 }
@@ -64,3 +85,97 @@ body {
 .form-box p{
     text-align: left;
 }
+
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
+.star-ratings-css {
+  unicode-bidi: bidi-override;
+  color: #c5c5c5;
+  font-size: 15px;
+  height: 25px;
+  width: auto;
+  margin: 0 auto;
+  position: relative;
+  padding: 0;
+  text-shadow: 0px 1px 0 #a2a2a2;
+}
+.star-ratings-css-top {
+  color: #e7711b;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.star-ratings-css-bottom {
+  padding: 0;
+  display: block;
+  z-index: 0;
+}
+
+.rate-box {
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+}
+.title-box {
+    float: left;
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 5px;
+    padding: 2px 5px;
+    background-color: rgb(230, 230, 230);
+    border: grey;
+    border-radius: 3px;
+}
+.star-box {
+    height: 25px;
+    line-height: 25px;
+    padding: 2.5 0;
+}
+.review-box {
+    float: left;
+    border-radius: 3px;
+    width: 100%;
+    height: 100px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: rgb(231, 252, 255);
+}
+
+.review-content {
+    height: 100%;
+    display: inline-block;
+}
+
+.botton-box {
+    height: 30px;
+    float: left;
+}
+
+.star-ratings-sprite {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-size: 15px;
+    font-size: 0;
+    height: 15px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 75px;
+    padding: 0, 5px;
+    margin: 0 auto;
+    }
+    .star-ratings-sprite-rating {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-size: 15px;
+    background-position: 0 100%;
+    float: left;
+    height: 15px;
+    width: 75px;
+    display: block;
+    }
+    
+    
+

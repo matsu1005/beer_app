@@ -1,6 +1,14 @@
 from django.db import models
+from django.db.models.aggregates import Count
 from accounts.models import CustomUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models import Avg
+
+class BeerManager(models.Manager):
+
+    def get_queryset(self): 
+        return super().get_queryset().annotate(review_count=Count('review'))
+
 
 class Beer(models.Model):
     BEER_TYPE = [
@@ -18,6 +26,8 @@ class Beer(models.Model):
     features = models.TextField(verbose_name='特徴', blank=True, null=True)
     url = models.URLField(verbose_name='公式サイト', blank=True, null=True)
 
+    objects = BeerManager()
+
     def __str__(self):
         return self.beer_name
 
@@ -30,6 +40,25 @@ class Favo(models.Model):
     def __str__(self):
         return 'お気に入り'
 
+class ReviewManager(models.Manager):
+
+    def beer_score(self):
+        score = self.get_queryset().aggregate(Avg('score'))
+        score = score['score__avg']
+        return score
+
+    def rate(self):
+        score = self.get_queryset().aggregate(Avg('score'))
+        rate = score['score__avg'] / 5 * 100
+        return rate
+
+    def random(self):
+        print(self.get_queryset().order_by('?')[:1], self.get_queryset())
+        random_review = self.get_queryset().order_by('?').first()
+        return random_review
+
+    # def private(self):
+    #     return self.get_queryset().filter(created_at__gt=timezone.now())
 
 class Review(models.Model):
     beer = models.ForeignKey(Beer, verbose_name='ビール', on_delete=models.CASCADE)
@@ -46,6 +75,8 @@ class Review(models.Model):
     image3 = models.ImageField(verbose_name='写真3', blank=True, null=True)
     created_dt = models.DateTimeField(verbose_name='作成日時', auto_now_add=True)
     updated_dt = models.DateTimeField(verbose_name='更新日時', auto_now=True)
+
+    objects = ReviewManager()
 
     def __str__(self):
         return self.content
