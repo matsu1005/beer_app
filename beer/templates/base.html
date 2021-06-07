@@ -77,9 +77,10 @@
 			</div>
         {% endif %}
 		
-		<div id="post-botton">
-			<a href="#" class="post-botton">投稿する</a>
-		</div>
+
+		<a href="{% url 'beer:review_create'%}" id="post-button" class="post-button">投稿する</a>
+
+	
 
         {% block contents%}{% endblock %}
 

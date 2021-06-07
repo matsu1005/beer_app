@@ -1,7 +1,9 @@
 from beer.models import Beer, Review
-from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.contrib import messages
 from django.views import generic
-from django.db.models import Avg
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import ReviewCreateForm
 
 
 class IndexView(generic.ListView):
@@ -15,11 +17,22 @@ class IndexView(generic.ListView):
 		for beer in beers:
 			review_list.extend(list(beer.review_set.all().order_by('?')[:1].values_list('id', flat=True)))		
 		context['review_list'] = Review.objects.filter(pk__in=review_list)
-		# print(Beer.objects.random())
 		return context
 
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     # カテゴリを、紐づいた記事数と一緒に取得し、その記事数順に並び替え
-    #     return queryset.annotate(beer_score=('post')).order_by('-post_count')
+class ReviewCreateView(LoginRequiredMixin, generic.CreateView):
+	model = Review
+	template_name = 'review_create.html'
+	form_class = ReviewCreateForm
+	success_url = reverse_lazy('beer:index')
+
+	def form_valid(self, form):
+		review = form.save(commit=False)
+		review.user = self.request.user
+		review.save()
+		messages.success(self.request, 'レビューを投稿しました。')
+		return super().form_valid(form)
+
+	def form_invalid(self, form):
+		messages.error(self.request, 'レビューの投稿に失敗しました。')
+		return super().form_invalid(form)

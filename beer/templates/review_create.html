@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block contents %}
+<div class="container">
+    <div class="row">
+        <div class="form-box" style="width:70%; margin: 20px auto;">
+            <form method="POST" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <table class="table">
+                    <tbody>
+                        {% for field in form %}
+                        {% if 'taste' in field.name or field.name == 'score' %}
+                        <tr>
+                            <th><label for="id_{{field.name}}">{{field.label}}:</label></th>
+                            <td>
+                                <div class="evaluation">
+                                    <input id="{{field.name}}1" type="radio" name="{{field.name}}" value="5" />
+                                    <label for="{{field.name}}1"><span class="text">最高</span>★</label>
+                                    <input id="{{field.name}}2" type="radio" name="{{field.name}}" value="4" />
+                                    <label for="{{field.name}}2"><span class="text">いいね</span>★</label>
+                                    <input id="{{field.name}}3" type="radio" name="{{field.name}}" value="3" />
+                                    <label for="{{field.name}}3"><span class="text">普通</span>★</label>
+                                    <input id="{{field.name}}4" type="radio" name="{{field.name}}" value="2" />
+                                    <label for="{{field.name}}4"><span class="text">まあまあ</span>★</label>
+                                    <input id="{{field.name}}5" type="radio" name="{{field.name}}" value="1" />
+                                    <label for="{{field.name}}5"><span class="text">ん〜</span>★</label>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <th><label for="id_{{field.name}}">{{field.label}}:</label></th>
+                            <td>{{ field }}</td>
+                        
+                        {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" type="submit">作成</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
