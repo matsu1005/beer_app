@@ -44,7 +44,7 @@ class ReviewManager(models.Manager):
 
     def beer_score(self):
         score = self.get_queryset().aggregate(Avg('score'))
-        score = score['score__avg']
+        score = round(score['score__avg'], 1)
         return score
 
     def rate(self):
@@ -53,7 +53,6 @@ class ReviewManager(models.Manager):
         return rate
 
     def random(self):
-        print(self.get_queryset().order_by('?')[:1], self.get_queryset())
         random_review = self.get_queryset().order_by('?').first()
         return random_review
 

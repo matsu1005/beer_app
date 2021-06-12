@@ -61,6 +61,10 @@ body {
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
 }
+.card-body a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
 
 .card-text {
     font-size: 0.8rem;
@@ -142,8 +146,9 @@ body {
 }
 
 .review-content {
-    height: 100%;
+    height: 50px;
     display: inline-block;
+
 }
 
 .botton-box {
@@ -186,7 +191,7 @@ body {
     padding: 10px 10px 0;
     color: gray;
     cursor: pointer;
-    font-size: 50px;
+    font-size: 25px;
 }
 .evaluation label .text{
     position: absolute;
@@ -201,4 +206,9 @@ body {
 .evaluation label:hover ~ label,
 .evaluation input[type='radio']:checked ~ label{
     color: #ffcc00;
+}
+
+.rate-row {
+    float: left;
+     margin: 5px 0;
 }

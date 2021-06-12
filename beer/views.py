@@ -36,3 +36,9 @@ class ReviewCreateView(LoginRequiredMixin, generic.CreateView):
 	def form_invalid(self, form):
 		messages.error(self.request, 'レビューの投稿に失敗しました。')
 		return super().form_invalid(form)
+
+
+class DetailView(generic.DetailView):
+	model = Beer
+	template_name = 'beer_detail.html'
+	

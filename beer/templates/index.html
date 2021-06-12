@@ -33,7 +33,9 @@
 						<img class="bd-placeholder-img card-img-top" style="width:100%; display: inline-block;" src="../static/img/beer_sample2.jpg" >
 					</div>
 					<div class="card-body">
-						<p><strong>{{beer.beer_name|truncatechars:50}}</strong></p>
+						<p><a href="{% url 'beer:beer_detail' beer.pk %}">
+							<strong>{{beer.beer_name|truncatechars:50}}</strong>
+						</a></p>
 						<p class="review-content card-text">レビューがありません。</p>
 					{% else %}
 					{% for review in review_list %}
@@ -42,7 +44,9 @@
 						<img class="bd-placeholder-img card-img-top" style="width:100%; max-height: 225px; display: inline-block;" src="{{ review.image1.url }}" >
 					</div>
 					<div class="card-body">
-						<p><strong>{{beer.beer_name|truncatechars:50}}</strong></p>
+						<p><a href="{% url 'beer:beer_detail' beer.pk %}">
+							<strong>{{beer.beer_name|truncatechars:50}}</strong>
+						</a></p>
 						<div class="rate-box">
 							<p class="title-box">総合評価：{{ beer.review_set.beer_score }}</p>
 							<div class="star-box">
@@ -55,10 +59,12 @@
 						</div>
 						<div class="review-box" >
 							<div style="padding-bottom:5px; border-bottom: solid rgb(210, 228, 252);">
-								<p style="float: left; margin-right: 10px;">{{ review.user}}</p>
+								<a href="#">
+								<p style="float: left; margin-right: 10px;">{{ review.user }}</p>
 								{% if review.user.image %}
 								<img src={{review.user.image.url}} width="25" height="25" style="border-radius: 20px;">
 								{% endif %}
+							</a>
 							</div>
 							<p class="review-content card-text">{{review.content|truncatechars:38}}</p>
 						</div>
@@ -82,29 +88,4 @@
 	</div>
 
 </main>
-<script>
-	new Vue ({
-		el: "cul_rate",
-		data: {
-			rate: ''
-		}
-	})
-</script>
 {% endblock%}
-
-
-
-<td><select name="beer" class="form-control" required="" id="id_beer">
-	<option value="" selected="">---------</option>
-  
-	<option value="1">よなよなエール</option>
-  
-	<option value="2">インドの青鬼</option>
-  
-	<option value="3">サッポロラガービール</option>
-  
-	<option value="4">ザ・プレミアム・モルツ</option>
-  
-	<option value="5">霧島高原ビール/ブロンド</option>
-  
-  </select></td>

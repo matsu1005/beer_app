@@ -5,5 +5,6 @@ from . import views
 app_name = 'beer'
 urlpatterns = [
   path('', views.IndexView.as_view(), name="index"),
-  path('review_create', views.ReviewCreateView.as_view(), name="review_create")
+  path('review_create', views.ReviewCreateView.as_view(), name="review_create"),
+  path('beer_detail/<int:pk>/', views.DetailView.as_view(), name="beer_detail")
 ]
