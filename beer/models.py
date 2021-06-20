@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.aggregates import Count
+from django.db.models.aggregates import Count, Max
 from accounts.models import CustomUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import Avg
@@ -7,7 +7,14 @@ from django.db.models import Avg
 class BeerManager(models.Manager):
 
     def get_queryset(self): 
-        return super().get_queryset().annotate(review_count=Count('review'))
+        return super().get_queryset()\
+                .annotate(score_avg = Avg('review__score'), kire_avg = Avg('review__taste_kire'),
+                          sannmi_avg = Avg('review__taste_sannmi'), nigami_avg = Avg('review__taste_nigami'),
+                          amami_avg = Avg('review__taste_amami'), koku_avg = Avg('review__taste_koku'),
+                          review_count = Count('review'), image_url = Max('review__image1'))
+
+
+
 
 
 class Beer(models.Model):
@@ -56,8 +63,10 @@ class ReviewManager(models.Manager):
         random_review = self.get_queryset().order_by('?').first()
         return random_review
 
-    # def private(self):
-    #     return self.get_queryset().filter(created_at__gt=timezone.now())
+    def score(self):
+        score = self.get_queryset().values('beer').aggregate(Avg('score'))
+        return score
+
 
 class Review(models.Model):
     beer = models.ForeignKey(Beer, verbose_name='ビール', on_delete=models.CASCADE)

@@ -11,81 +11,188 @@
 		</div>
 	</section>
 
-	<div class="sel_box">
-		<p>お好みのビールの特徴を選択してみよう！</p>
-		<div class="btn-group" role="group" aria-label="Basic example"></div>
-			<button type="button" class="btn btn-primary my-2">キレ</a>
-			<button type="button" class="btn btn-info my-2">酸味</a>
-			<button type="button" class="btn btn-primary my-2">苦味</a>
-			<button type="button" class="btn btn-info my-2">甘味</a>
-			<button type="button" class="btn btn-primary my-2">コク</a>
-		</div>	
-	</div>
+<div id="app" v-cloak>
+    <div class="sel_box">
+        <p>お好みのビールの特徴を選択してみよう！</p>
+        <div class="btn-group" role="group" aria-label="Basic example"></div>
+            <button type="button" v-on:click="kireRecommend" class="btn btn-primary my-2">キレ</a>
+            <button type="button" v-on:click="sannmiRecommend" class="btn btn-info my-2">酸味</a>
+            <button type="button" v-on:click="nigamiRecommend" class="btn btn-primary my-2">苦味</a>
+            <button type="button" v-on:click="amamiRecommend" class="btn btn-info my-2">甘味</a>
+            <button type="button" v-on:click="kokuRecommend" class="btn btn-primary my-2">コク</a>
+        </div>	
+
+		<div style="display: flex; width: 75%; margin: auto;" v-if="pickupBeer.length">
+            <div class="col-md-4" style="max-width: 33%; min-width: 250px;" v-for="beer in pickupBeer">
+                <div class="card mb-4 shadow-sm" style="padding: 5px;">
+                    <div style="height: 225px">
+                        <img class="bd-placeholder-img card-img-top" style="width:100%; max-height: 225px; display: inline-block;" v-bind:src="'/media/' + beer.image_url" >
+                    </div>
+                    <div class="card-body">
+                        <p><a v-bind:href="'/beer_detail/' + beer.id">
+                            <strong>[[beer.beer_name]]</strong>
+                        </a></p>
+                        <div style="width: 200px;">
+                            <div class="rate-box rate-row">
+                                <p class="title-box">総評： [[beer.score_avg|roundScore]]</p>
+                                <div class="star-box">
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.score_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <p class="title-box">キレ： [[beer.kire_avg|roundScore]]</p>
+                                <div class="star-box">
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.kire_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">酸味： [[beer.sannmi_avg|roundScore]]</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.sannmi_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">苦味： [[beer.nigami_avg|roundScore]]</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.nigami_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">甘味： [[beer.amami_avg|roundScore]]</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.amami_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">コク： [[beer.koku_avg|roundScore]]</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.koku_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p v-show="noneBeer">おすすめがありません。</p>
+    </div>
+</div>
+<style>
+    [v-cloak] {
+      display: none;
+    }
+    #app { 
+        text-align: center;
+    }
+</style>
 
 	<div class="album py-5 bg-light">
 		<div class="container">
-		<div class="row">
-			{% for beer in beer_list %}
-			<div class="col-md-4" style="max-width: 25%; min-width: 250px;">
-				<div class="card mb-4 shadow-sm">
-					{% if not beer.review_set.all %}
-					<div style="height: 225px">
-						<img class="bd-placeholder-img card-img-top" style="width:100%; display: inline-block;" src="../static/img/beer_sample2.jpg" >
-					</div>
-					<div class="card-body">
-						<p><a href="{% url 'beer:beer_detail' beer.pk %}">
-							<strong>{{beer.beer_name|truncatechars:50}}</strong>
-						</a></p>
-						<p class="review-content card-text">レビューがありません。</p>
-					{% else %}
-					{% for review in review_list %}
-					{% if review.beer == beer %}
-					<div style="height: 225px">
-						<img class="bd-placeholder-img card-img-top" style="width:100%; max-height: 225px; display: inline-block;" src="{{ review.image1.url }}" >
-					</div>
-					<div class="card-body">
-						<p><a href="{% url 'beer:beer_detail' beer.pk %}">
-							<strong>{{beer.beer_name|truncatechars:50}}</strong>
-						</a></p>
-						<div class="rate-box">
-							<p class="title-box">総合評価：{{ beer.review_set.beer_score }}</p>
-							<div class="star-box">
-								<div class="star-ratings-sprite">
-									<span style="width:{{ beer.review_set.rate }}%" class="star-ratings-sprite-rating"></span>
+			<div class="row">
+				{% for beer in beer_list %}
+				<div class="col-md-4" style="max-width: 25%; min-width: 250px;">
+					<div class="card mb-4 shadow-sm">
+						{% if not beer.review_set.all %}
+						<div style="height: 225px">
+							<img class="bd-placeholder-img card-img-top" style="width:100%; display: inline-block;" src="../static/img/beer_sample2.jpg" >
+						</div>
+						<div class="card-body">
+							<p><a href="{% url 'beer:beer_detail' beer.pk %}">
+								<strong>{{beer.beer_name|truncatechars:50}}</strong>
+							</a></p>
+							<p class="review-content card-text">レビューがありません。</p>
+						{% else %}
+						{% for review in review_list %}
+						{% if review.beer == beer %}
+						<div style="height: 225px">
+							<img class="bd-placeholder-img card-img-top" style="width:100%; max-height: 225px; display: inline-block;" src="{{ review.image1.url }}" >
+						</div>
+						<div class="card-body">
+							<p><a href="{% url 'beer:beer_detail' beer.pk %}">
+								<strong>{{beer.beer_name|truncatechars:50}}</strong>
+							</a></p>
+							<div class="rate-box">
+								<p class="title-box">総合評価：{{ beer.review_set.beer_score }} <span style="color: grey;">({{beer.review_count}})</span></p>
+								<div class="star-box">
+									<div class="star-ratings-sprite">
+										<span style="width:{{ beer.review_set.rate }}%" class="star-ratings-sprite-rating"></span>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div style="width:100%; float: left; font-size: 15px;">みんなのレビュー
-						</div>
-						<div class="review-box" >
-							<div style="padding-bottom:5px; border-bottom: solid rgb(210, 228, 252);">
-								<a href="#">
-								<p style="float: left; margin-right: 10px;">{{ review.user }}</p>
-								{% if review.user.image %}
-								<img src={{review.user.image.url}} width="25" height="25" style="border-radius: 20px;">
-								{% endif %}
-							</a>
+							<div style="width:100%; float: left; font-size: 15px;">みんなのレビュー
 							</div>
-							<p class="review-content card-text">{{review.content|truncatechars:38}}</p>
-						</div>
-					{% endif %}
-					{% endfor %}
-					{% endif %}
-						<div class="button-box">
-							<div class="btn-group">
-							<button type="button" class="btn btn-sm btn-outline-secondary">お気に入り</button>
+							<div class="review-box" >
+								<div style="padding-bottom:5px; border-bottom: solid rgb(210, 228, 252);">
+									<a href="#">
+									<p style="float: left; margin-right: 10px;">{{ review.user }}</p>
+									{% if review.user.image %}
+									<img src={{review.user.image.url}} width="25" height="25" style="border-radius: 20px;">
+									{% endif %}
+								</a>
+								</div>
+								<p class="review-content card-text">{{review.content|truncatechars:38}}</p>
 							</div>
-							<small class="text-muted">タグ</small>
+						{% endif %}
+						{% endfor %}
+						{% endif %}
+							<div class="button-box">
+								<div class="btn-group">
+								<button type="button" class="btn btn-sm btn-outline-secondary">お気に入り</button>
+								</div>
+								<small class="text-muted">タグ</small>
+							</div>
 						</div>
 					</div>
 				</div>
+				{% empty %}
+					<p style="text-align: center;">登録されているビールはありません。</p>
+				{% endfor %}
 			</div>
-			{% empty %}
-				<p style="text-align: center;">登録されているビールはありません。</p>
-			{% endfor %}
-		</div>
+			<div style="width: 100px; margin: auto;">
+			{% if is_paginated %}
+				<ul class="pagination" style="margin: auto;">
+					<!-- 前ページへのリンク -->
+					{% if page_obj.has_previous %}
+						<li class="page-item">
+							<a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+					{% endif %}
+		
+					<!-- ページ数表示 -->
+					{% for page_num in page_obj.paginator.page_range %}
+						{% if page_obj.number == page_num %}
+							<li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
+						{% else %}
+							<li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+						{% endif %}
+					{% endfor %}
+		
+					<!-- 次ページへのリンク -->
+					{% if page_obj.has_next %}
+						<li class="page-item">
+							<a class="page-link" href="?page={{ page_obj.next_page_number }}">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			{% endif %}
+			</div>
 		</div>
 	</div>
-
 </main>
 {% endblock%}

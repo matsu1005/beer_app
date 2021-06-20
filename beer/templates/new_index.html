@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contents %}
+
+<h1>My Todo List</h1>
+
+<div id="app" v-cloak>
+    <div class="sel_box">
+        <p>お好みのビールの特徴を選択してみよう！</p>
+        <div class="btn-group" role="group" aria-label="Basic example"></div>
+            <button type="button" v-on:click="kireRecommend" class="btn btn-primary my-2">キレ</a>
+            <button type="button" v-on:click="sannmiRecommend" class="btn btn-info my-2">酸味</a>
+            <button type="button" v-on:click="nigamiRecommend" class="btn btn-primary my-2">苦味</a>
+            <button type="button" v-on:click="amamiRecommend" class="btn btn-info my-2">甘味</a>
+            <button type="button" v-on:click="kokuRecommend" class="btn btn-primary my-2">コク</a>
+        </div>	
+
+		<div style="display: flex; width: 75%; margin: auto;" v-if="pickupBeer.length">
+            <div class="col-md-4" style="max-width: 33%; min-width: 250px;" v-for="beer in pickupBeer">
+                <div class="card mb-4 shadow-sm" style="padding: 5px;">
+                    <div style="height: 225px">
+                        <img class="bd-placeholder-img card-img-top" style="width:100%; max-height: 225px; display: inline-block;" v-bind:src="'/media/' + beer.image_url" >
+                    </div>
+                    <div class="card-body">
+                        <p><a v-bind:href="'/beer_detail/' + beer.id">
+                            <strong>[[beer.beer_name]]</strong>
+                        </a></p>
+                        <div style="width: 200px;">
+                            <div class="rate-box rate-row">
+                                <p class="title-box">総評</p>
+                                <div class="star-box">
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.score_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <p class="title-box">キレ</p>
+                                <div class="star-box">
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.kire_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">酸味</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.sannmi_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">苦味</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.nigami_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">甘味</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.amami_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rate-box rate-row">
+                                <div class="star-box">
+                                    <p class="title-box">コク</p>
+                                    <div class="star-ratings-sprite">
+                                        <span v-bind:style="'width:' + beer.koku_avg / 5 * 100 + '%'" class="star-ratings-sprite-rating"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p v-show="noneBeer">おすすめがありません。</p>
+    </div>
+</div>
+<style>
+    [v-cloak] {
+      display: none;
+    }
+    #app { 
+        text-align: center;
+    }
+</style>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
