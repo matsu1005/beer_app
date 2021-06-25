@@ -1,7 +1,4 @@
 # beer_app
 
 
-
-
-https://user-images.githubusercontent.com/55049751/123366565-61b44b00-d5b3-11eb-8fd1-52b4fa7209d5.mp4
-
+[![Image from Gyazo](https://i.gyazo.com/6887ff23d4223061540da77bbfd00013.gif)](https://gyazo.com/6887ff23d4223061540da77bbfd00013)
