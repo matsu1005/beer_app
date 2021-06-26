@@ -22,8 +22,8 @@
             <button type="button" v-on:click="kokuRecommend" class="btn btn-primary my-2">コク</a>
         </div>	
 
-		<div style="display: flex; width: 75%; margin: auto;" v-if="pickupBeer.length">
-            <div class="col-md-4" style="max-width: 33%; min-width: 250px;" v-for="beer in pickupBeer">
+		<div style="display: flex; justify-content: center; flex-wrap: wrap;" v-if="pickupBeer.length">
+            <div style="max-width:253px; margin: 10px;" v-for="beer in pickupBeer">
                 <div class="card mb-4 shadow-sm" style="padding: 5px;">
                     <div style="height: 225px">
                         <img class="bd-placeholder-img card-img-top" style="width:100%; max-height: 225px; display: inline-block;" v-bind:src="'/media/' + beer.image_url" >
