@@ -11,5 +11,5 @@
 > <img src="https://user-images.githubusercontent.com/55049751/123494898-71d43500-d65c-11eb-91dc-f8734219e4b9.gif" width="600px">
 
 ## 使用フレームワーク
-Django==3.0.7
-Vue 2.5.16
+Django 3.0.7　<br>
+Vue    2.5.16
