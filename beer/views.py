@@ -30,6 +30,7 @@ class ReviewCreateView(LoginRequiredMixin, generic.CreateView):
 	success_url = reverse_lazy('beer:index')
 
 	def form_valid(self, form):
+		print(form)
 		review = form.save(commit=False)
 		review.user = self.request.user
 		review.save()

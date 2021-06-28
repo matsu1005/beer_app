@@ -6,12 +6,26 @@
 <div class="container">
     <div class="row">
         <div class="form-box" style="width:60%; margin: 20px auto;">
-            <form method="POST" enctype='multipart/form-data'>
+            <form method="POST" id="review-form" enctype='multipart/form-data'>
                 {% csrf_token %}
                 <table class="table">
                     <tbody>
                         {% for field in form %}
-                        {% if 'taste' in field.name or field.name == 'score' %}
+                        {% if field.name == 'beer' %}
+                        <tr>
+                            <th><label for="id_beer">ビール:</label></th>
+                            <td>
+                                <input type="text" autocomplete="on" list="mylist">
+                                <datalist id="mylist" hidden>
+                                    {%for i in field%}
+                                        {% if not forloop.first%}
+                                            {{i}}
+                                        {% endif%}
+                                    {% endfor %}
+                                </datalist>
+                            </td>
+                        </tr>   
+                        {% elif 'taste' in field.name or field.name == 'score' %}
                         <tr>
                             <th><label for="id_{{field.name}}">{{field.label}}:</label></th>
                             <td>
